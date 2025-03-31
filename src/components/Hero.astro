@@ -1,0 +1,95 @@
+---
+interface Avatar {
+    src: string;
+    alt: string;
+}
+
+interface Reviews {
+    count: number;
+    rating?: number;
+    avatars: Avatar[];
+}
+
+interface Props {
+    heading?: string;
+    description?: string;
+    button?: {
+        text: string;
+        url: string;
+    };
+    reviews?: Reviews;
+}
+
+const {
+    heading = "Music Discovery Unlocked",
+    description = "Unlock Spotify's hidden musical universe and discover your next obsession through the data that algorithms can't see.",
+    button = {
+        text: "Discover all components",
+        url: "https://www.shadcnblocks.com",
+    },
+    reviews = {
+        count: 200,
+        rating: 5.0,
+        avatars: [
+            {
+                src: "https://www.shadcnblocks.com/images/block/avatar-1.webp",
+                alt: "Avatar 1",
+            },
+            {
+                src: "https://www.shadcnblocks.com/images/block/avatar-2.webp",
+                alt: "Avatar 2",
+            },
+            {
+                src: "https://www.shadcnblocks.com/images/block/avatar-3.webp",
+                alt: "Avatar 3",
+            },
+            {
+                src: "https://www.shadcnblocks.com/images/block/avatar-4.webp",
+                alt: "Avatar 4",
+            },
+            {
+                src: "https://www.shadcnblocks.com/images/block/avatar-5.webp",
+                alt: "Avatar 5",
+            },
+        ],
+    },
+} = Astro.props;
+---
+
+<section class="flex py-32">
+    <div class="container mx-auto px-4">
+        <div class="max-w-4xl mx-auto flex flex-col items-center text-center gap-6">
+            <h1 class="text-3xl font-extrabold lg:text-6xl">{heading}</h1>
+            <p class="text-balance text-muted-foreground lg:text-lg">
+                {description}
+            </p>
+            <a href={button.url} class="mt-10 inline-flex h-11 items-center justify-center rounded-md bg-gray-300 px-8 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50">
+                {button.text}
+            </a>
+            <div class="mt-10 flex flex-col items-center gap-4 sm:flex-row">
+                <span class="inline-flex items-center -space-x-4">
+                    {reviews.avatars.map((avatar) => (
+                        <div class="size-14 border rounded-full overflow-hidden">
+                            <img src={avatar.src} alt={avatar.alt} class="h-full w-full" />
+                        </div>
+                    ))}
+                </span>
+                <div>
+                    <div class="flex items-center gap-1">
+                        {Array(5).fill(0).map(() => (
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="#FBBF24" stroke="#FBBF24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="size-5">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                            </svg>
+                        ))}
+                        <span class="ml-1 font-semibold">
+                            {reviews.rating?.toFixed(1)}
+                        </span>
+                    </div>
+                    <p class="text-left font-medium text-muted-foreground">
+                        from {reviews.count}+ reviews
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
